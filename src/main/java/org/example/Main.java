@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.liskov.Ave;
+import org.example.liskov.Avestruz;
 import org.example.service.DiscountService;
 import org.example.service.DiscountServiceMonedero;
 import org.example.service.DiscountServiceTalon;
@@ -12,5 +14,15 @@ public class Main {
 
         discount = new DiscountServiceMonedero();
         discount.obtenerDescuento();
+
+        Ave avestruz = new Avestruz();
+
+        try{
+            avestruz.volar();
+        }catch(Exception e){
+            System.out.println("Error : " + e.getMessage());
+        }
+
+
     }
 }
