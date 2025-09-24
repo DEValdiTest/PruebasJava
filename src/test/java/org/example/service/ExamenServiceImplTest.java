@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.model.Examen;
 import org.example.repository.ExamenRepository;
 import org.example.repository.ExamenRepositoryImpl;
+import org.example.repository.PreguntaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
@@ -18,10 +19,13 @@ class ExamenServiceImplTest {
 
     ExamenRepository repository;
     ExamenService service;
+    PreguntaRepository preguntaRepository;
+
     @BeforeEach
     void setUp() {
         repository = mock(ExamenRepository.class);//new ExamenRepositoryImpl();
-        service = new ExamenServiceImpl(repository);
+        preguntaRepository = mock(PreguntaRepository.class);
+        service = new ExamenServiceImpl(repository, preguntaRepository);
     }
 
     @Test
@@ -41,13 +45,15 @@ class ExamenServiceImplTest {
     @Test
     void findExamenPorNombreEmpty() {
 
-
         List<Examen> datos = Collections.emptyList();
 
         when(repository.findAll()).thenReturn(datos);
         Optional<Examen> examen = service.findExamenPorNombre("Matematicas");
 
-
         assertFalse(examen.isPresent());
+    }
+
+    @Test
+    void name() {
     }
 }
