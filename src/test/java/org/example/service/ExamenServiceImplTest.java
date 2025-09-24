@@ -1,0 +1,53 @@
+package org.example.service;
+
+import org.example.model.Examen;
+import org.example.repository.ExamenRepository;
+import org.example.repository.ExamenRepositoryImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ExamenServiceImplTest {
+
+    ExamenRepository repository;
+    ExamenService service;
+    @BeforeEach
+    void setUp() {
+        repository = mock(ExamenRepository.class);//new ExamenRepositoryImpl();
+        service = new ExamenServiceImpl(repository);
+    }
+
+    @Test
+    void findExamenPorNombre() {
+
+        List<Examen> datos = Arrays.asList(new Examen(5L, "Matematicas"), new Examen(6L,"Lenguaje"), new Examen(7L,"Historia"));
+
+        when(repository.findAll()).thenReturn(datos);
+        Optional<Examen> examen = service.findExamenPorNombre("Matematicas");
+
+
+        assertTrue(examen.isPresent());
+        assertEquals(5L, examen.get().getId());
+        assertEquals("Matematicas", examen.get().getNombre());
+    }
+
+    @Test
+    void findExamenPorNombreEmpty() {
+
+
+        List<Examen> datos = Collections.emptyList();
+
+        when(repository.findAll()).thenReturn(datos);
+        Optional<Examen> examen = service.findExamenPorNombre("Matematicas");
+
+
+        assertFalse(examen.isPresent());
+    }
+}

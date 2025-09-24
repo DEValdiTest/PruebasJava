@@ -2,7 +2,9 @@ package org.example.service;
 
 import org.example.model.Examen;
 
+import java.util.Optional;
+
 public interface ExamenService {
 
-    Examen findExamenPorNombre(String nombre);
+    Optional<Examen> findExamenPorNombre(String nombre);
 }
