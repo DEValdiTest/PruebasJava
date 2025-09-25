@@ -31,9 +31,7 @@ class ExamenServiceImplTest {
     @Test
     void findExamenPorNombre() {
 
-        List<Examen> datos = Arrays.asList(new Examen(5L, "Matematicas"), new Examen(6L,"Lenguaje"), new Examen(7L,"Historia"));
-
-        when(repository.findAll()).thenReturn(datos);
+        when(repository.findAll()).thenReturn(Datos.EXAMENES);
         Optional<Examen> examen = service.findExamenPorNombre("Matematicas");
 
 
@@ -54,6 +52,41 @@ class ExamenServiceImplTest {
     }
 
     @Test
-    void name() {
+    void testPreguntasExamen() {
+
+        when(repository.findAll()).thenReturn(Datos.EXAMENES);
+        when(preguntaRepository.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
+
+        Examen examen = service.findExamenPorNombreConPreguntas("Matematicas");
+        assertEquals(5, examen.getPreguntas().size());
+        assertTrue(examen.getPreguntas().contains("Aritmética"));
+
+    }
+
+    @Test
+    void testPreguntasExamenVerify() {
+
+        when(repository.findAll()).thenReturn(Datos.EXAMENES);
+        when(preguntaRepository.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
+
+        Examen examen = service.findExamenPorNombreConPreguntas("Matematicas");
+        assertEquals(5, examen.getPreguntas().size());
+        assertTrue(examen.getPreguntas().contains("Aritmética"));
+        verify(repository).findAll();
+        verify(preguntaRepository).findPreguntasPorExamenId(anyLong());
+
+    }
+
+    @Test
+    void testNoExisteExamenVerify() {
+
+        when(repository.findAll()).thenReturn(Datos.EXAMENES);
+        when(preguntaRepository.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
+
+        Examen examen = service.findExamenPorNombreConPreguntas("Matematicas");
+        assertNotNull(examen);
+        verify(repository).findAll();
+        verify(preguntaRepository).findPreguntasPorExamenId(5L);
+
     }
 }
