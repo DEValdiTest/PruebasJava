@@ -40,7 +40,7 @@ public class ExamenServiceImpl implements ExamenService {
     @Override
     public Examen guardar(Examen examen) {
 
-        if(!examen.getPreguntas().isEmpty()){
+        if(examen.getPreguntas() != null && !examen.getPreguntas().isEmpty()){
             preguntaRepository.guardarVarias(examen.getPreguntas());
         }
         return examenRepository.guardar(examen);
