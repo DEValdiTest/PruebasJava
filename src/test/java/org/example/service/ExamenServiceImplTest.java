@@ -6,6 +6,12 @@ import org.example.repository.ExamenRepositoryImpl;
 import org.example.repository.PreguntaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -15,17 +21,22 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class ExamenServiceImplTest {
 
+    @Mock
     ExamenRepository repository;
-    ExamenService service;
+    @InjectMocks
+    ExamenServiceImpl service;
+    @Mock
     PreguntaRepository preguntaRepository;
 
     @BeforeEach
     void setUp() {
-        repository = mock(ExamenRepository.class);//new ExamenRepositoryImpl();
+       // MockitoAnnotations.openMocks(this);//sirve de reemplazo para  las anotaciones @ExtendWith(MockitoExtension.class)
+       /* repository = mock(ExamenRepository.class);//new ExamenRepositoryImpl();
         preguntaRepository = mock(PreguntaRepository.class);
-        service = new ExamenServiceImpl(repository, preguntaRepository);
+        service = new ExamenServiceImpl(repository, preguntaRepository);*/
     }
 
     @Test
@@ -88,5 +99,10 @@ class ExamenServiceImplTest {
         verify(repository).findAll();
         verify(preguntaRepository).findPreguntasPorExamenId(5L);
 
+    }
+
+    @Test
+    void testGuardarExamen(){
+        when(repository.guardar())
     }
 }
